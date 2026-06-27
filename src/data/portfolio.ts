@@ -19,7 +19,7 @@ export const profile = {
     'Dari nge-build SMM panel yang handle ribuan transaksi, sampai bot automation buat WhatsApp, Telegram, & Discord. Suka vibe coding pake AI, SEO, dan ngoprek hal-hal baru tiap hari.',
   ],
   socials: [
-    { label: 'GitHub', href: 'https://github.com/Hitamlegit6677', letter: 'G' },
+    { label: 'GitHub', href: 'https://github.com/Hitamlegit6777', letter: 'G' },
     { label: 'Telegram', href: 'https://t.me/zenith6666', letter: 'TG' },
     { label: 'kliksosmed', href: 'https://kliksosmed.id', letter: 'k' },
   ],

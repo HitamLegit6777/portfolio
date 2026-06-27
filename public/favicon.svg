@@ -1,4 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="4" fill="#FFD93D" stroke="#0a0a0a" stroke-width="4"/>
-  <text x="16" y="24" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#0a0a0a">R</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <rect width="32" height="32" fill="#0a0a0a"/>
+  <rect x="3" y="3" width="26" height="26" fill="#FFD93D"/>
+  <g fill="#0a0a0a">
+    <rect x="8" y="7" width="5" height="18"/>
+    <rect x="8" y="7" width="15" height="5"/>
+    <rect x="18" y="7" width="5" height="12"/>
+    <rect x="8" y="14" width="15" height="5"/>
+    <polygon points="18,19 23,19 25,25 20,25"/>
+  </g>
 </svg>
