@@ -1,30 +1,36 @@
 ---
+import { profile } from '../data/portfolio.ts';
 const links = [
-  { label: 'Features', href: '#features' },
-  { label: 'Workflow', href: '#workflow' },
-  { label: 'Customers', href: '#customers' },
-  { label: 'Pricing', href: '#pricing' },
+  { label: 'About', href: '#about' },
+  { label: 'Work', href: '#work' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Blog', href: '#blog' },
+  { label: 'Contact', href: '#contact' },
 ];
 ---
 
+<div class="topbar">
+  <div class="marquee">
+    <div class="marquee-track">
+      {
+        Array.from({ length: 2 }).map(() => (
+          <span class="marquee-group">
+            {profile.roles.map((r) => (
+              <span class="m-item">{r} <i>★</i></span>
+            ))}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
 <header class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#top" class="brand" aria-label="Nebula home">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32" width="28" height="28">
-          <defs>
-            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#a78bfa" />
-              <stop offset="0.5" stop-color="#d946ef" />
-              <stop offset="1" stop-color="#22d3ee" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M16 4c1.9 4.8 5.2 8.1 10 10-4.8 1.9-8.1 5.2-10 10-1.9-4.8-5.2-8.1-10-10C10.8 12.1 14.1 8.8 16 4z"
-            fill="url(#lg)"></path>
-        </svg>
-      </span>
-      <span class="brand-name">Nebula</span>
+    <a href="#top" class="brand">
+      <span class="brand-mark">{profile.name[0]}</span>
+      <span class="brand-text">{profile.name}<i>.dev</i></span>
     </a>
 
     <nav class="nav-links" aria-label="Primary">
@@ -32,13 +38,8 @@ const links = [
     </nav>
 
     <div class="nav-actions">
-      <a href="#" class="nav-link signin">Sign in</a>
-      <a href="#cta" class="btn btn-primary nav-cta">
-        Get started
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-      </a>
-      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+      <a href="#contact" class="btn btn-ink nav-cta">Let's talk</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -46,29 +47,56 @@ const links = [
 
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     {links.map((l) => <a href={l.href} class="m-link">{l.label}</a>)}
-    <a href="#cta" class="btn btn-primary m-cta">Get started</a>
+    <a href="#contact" class="btn btn-ink m-cta">Let's talk</a>
   </div>
 </header>
 
 <style>
-  .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 18px 0;
-    transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out),
-      border-color 0.4s var(--ease-out), backdrop-filter 0.4s;
-    border-bottom: 1px solid transparent;
+  .topbar {
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: var(--border);
+    overflow: hidden;
+    padding: 9px 0;
+  }
+  .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+  .marquee-group {
+    display: inline-flex;
+    align-items: center;
+  }
+  .m-item {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .m-item i {
+    color: var(--yellow);
+    font-style: normal;
   }
 
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: var(--border);
+  }
   .nav.scrolled {
-    padding: 10px 0;
-    background: rgba(8, 8, 14, 0.72);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border-bottom-color: var(--border);
+    box-shadow: 0 6px 0 var(--ink);
   }
 
   .nav-inner {
@@ -76,121 +104,124 @@ const links = [
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    height: 74px;
   }
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 20px;
+    font-size: 22px;
     letter-spacing: -0.02em;
   }
-
   .brand-mark {
     display: grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
+    width: 42px;
+    height: 42px;
+    background: var(--yellow);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    font-size: 22px;
+    font-weight: 700;
+    transform: rotate(-4deg);
+    transition: transform 0.3s var(--ease);
+  }
+  .brand:hover .brand-mark {
+    transform: rotate(4deg) scale(1.05);
+  }
+  .brand-text i {
+    font-style: normal;
+    color: var(--pink);
   }
 
   .nav-links {
     display: flex;
     align-items: center;
     gap: 4px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
   }
-
   .nav-link {
-    padding: 8px 14px;
-    border-radius: 100px;
-    font-size: 14.5px;
-    font-weight: 500;
-    color: var(--text-muted);
-    transition: color 0.25s, background 0.25s;
+    padding: 9px 16px;
+    font-weight: 600;
+    font-size: 15px;
+    border: 3px solid transparent;
+    transition: all 0.2s var(--ease);
   }
   .nav-link:hover {
-    color: var(--text);
-    background: var(--surface);
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    transform: rotate(-2deg);
   }
 
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .signin {
-    display: none;
-  }
   .nav-cta {
     padding: 11px 20px;
     font-size: 14px;
+    box-shadow: var(--shadow-sm);
   }
 
   .burger {
     display: none;
     flex-direction: column;
-    gap: 5px;
-    padding: 8px;
+    gap: 6px;
+    padding: 10px;
+    border: 3px solid var(--ink);
+    background: var(--pink);
   }
   .burger span {
-    width: 22px;
-    height: 2px;
-    background: var(--text);
-    border-radius: 2px;
-    transition: transform 0.3s var(--ease-out), opacity 0.3s;
+    width: 24px;
+    height: 3px;
+    background: var(--ink);
+    transition: transform 0.3s var(--ease), opacity 0.3s;
   }
   .burger.open span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(9px) rotate(45deg);
   }
   .burger.open span:nth-child(2) {
     opacity: 0;
   }
   .burger.open span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-9px) rotate(-45deg);
   }
 
   .mobile-menu {
     display: none;
     flex-direction: column;
-    gap: 4px;
-    padding: 14px 24px 24px;
+    gap: 8px;
+    padding: 16px 22px 24px;
+    border-bottom: var(--border);
+    background: var(--paper);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s var(--ease-out), padding 0.4s;
-    background: rgba(8, 8, 14, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
+    transition: max-height 0.4s var(--ease), padding 0.4s;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .mobile-menu.open {
-    max-height: 420px;
-    padding: 14px 24px 24px;
+    max-height: 520px;
+    padding-top: 16px;
+    padding-bottom: 24px;
   }
   .m-link {
-    padding: 14px 8px;
-    font-weight: 500;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
+    padding: 14px 12px;
+    font-weight: 700;
+    font-size: 18px;
+    border: 3px solid var(--ink);
+    background: #fff;
+    text-transform: uppercase;
   }
   .m-cta {
-    margin-top: 16px;
+    margin-top: 8px;
     width: 100%;
-  }
-
-  @media (min-width: 900px) {
-    .signin {
-      display: inline-flex;
-    }
   }
 
   @media (max-width: 899px) {
     .nav-links {
+      display: none;
+    }
+    .nav-cta {
       display: none;
     }
     .burger {
@@ -198,9 +229,6 @@ const links = [
     }
     .mobile-menu {
       display: flex;
-    }
-    .nav-cta {
-      display: none;
     }
   }
 </style>
@@ -210,11 +238,9 @@ const links = [
   const burger = document.getElementById('burger');
   const menu = document.getElementById('mobileMenu');
 
-  const onScroll = () => {
-    nav?.classList.toggle('scrolled', window.scrollY > 20);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
 
   burger?.addEventListener('click', () => {
     const open = burger.classList.toggle('open');

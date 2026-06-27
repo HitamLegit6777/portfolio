@@ -1,0 +1,267 @@
+---
+import { profile } from '../data/portfolio.ts';
+---
+
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="contact-card reveal">
+      <div class="contact-left">
+        <span class="section-kicker" style="background:var(--paper); color:var(--ink)">// Get in touch</span>
+        <h2 class="contact-title">
+          Punya project?<br />
+          <span class="ct-hl">Mari diskusi.</span>
+        </h2>
+        <p class="contact-sub">
+          Mau bangun web app, butuh bot automation, atau sekadar ngobrol soal
+          teknologi? Kirim pesan aja, biasanya fast respon.
+        </p>
+
+        <div class="contact-chips">
+          <a href={`mailto:${profile.email}`} class="c-chip mail">
+            <span>✉️</span> {profile.email}
+          </a>
+          <span class="c-chip loc"><span>📍</span> {profile.location}</span>
+          <span class="c-chip status"><span class="pulse"></span> Available</span>
+        </div>
+
+        <div class="contact-socials">
+          {profile.socials.map((s) => (
+            <a href={s.href} class="cs-link" target="_blank" rel="noopener">
+              <span class="cs-letter">{s.letter}</span> {s.label}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="return false">
+        <div class="f-row">
+          <label class="f-field">
+            <span>Nama</span>
+            <input type="text" name="name" placeholder="Siapa lo?" required />
+          </label>
+          <label class="f-field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="lo@email.com" required />
+          </label>
+        </div>
+        <label class="f-field">
+          <span>Subject</span>
+          <input type="text" name="subject" placeholder="Mau ngobrol apa?" />
+        </label>
+        <label class="f-field">
+          <span>Pesan</span>
+          <textarea name="message" rows="5" placeholder="Ceritain idemu..." required></textarea>
+        </label>
+        <button type="submit" class="btn btn-ink submit">
+          Kirim pesan
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+        <p class="f-note" id="formNote">Biasanya dibalas dalam 1× 24 jam.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--blue);
+    border-top: var(--border);
+    border-bottom: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+    pointer-events: none;
+  }
+  .contact > .container { position: relative; }
+
+  .contact-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .contact-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5.5vw, 64px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: 22px 0 18px;
+  }
+  .ct-hl {
+    display: inline-block;
+    background: var(--yellow);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 0 12px;
+    transform: rotate(-3deg);
+  }
+  .contact-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 460px;
+  }
+
+  .contact-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .c-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    background: #fff;
+    border: 3px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 13px;
+    transition: transform 0.2s var(--ease);
+  }
+  .c-chip.mail:hover {
+    transform: translate(-3px, -3px) rotate(-2deg);
+    box-shadow: 8px 8px 0 var(--ink);
+    background: var(--yellow);
+  }
+  .c-chip.status .pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--ink);
+    animation: blink 1.2s infinite;
+  }
+
+  .contact-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cs-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 3px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all 0.2s var(--ease);
+  }
+  .cs-link:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translate(-4px, -4px);
+    box-shadow: 9px 9px 0 var(--ink);
+  }
+  .cs-link svg {
+    margin-left: auto;
+  }
+  .cs-letter {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    background: var(--pink);
+    border: 2px solid var(--ink);
+    font-family: var(--font-display);
+    font-size: 13px;
+  }
+
+  /* Form */
+  .contact-form {
+    background: #fff;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .f-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .f-field input,
+  .f-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .f-field input:focus,
+  .f-field textarea:focus {
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .submit {
+    width: 100%;
+    margin-top: 4px;
+  }
+  .submit:hover {
+    background: var(--green);
+  }
+  .f-note {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .f-note.ok {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 880px) {
+    .contact-card { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 520px) {
+    .f-row { grid-template-columns: 1fr; }
+    .contact-form { padding: 24px; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contactForm');
+  const note = document.getElementById('formNote');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (note) {
+      note.textContent = '✓ Pesan terkirim! Gue balas via email ya.';
+      note.classList.add('ok');
+    }
+    (form as HTMLFormElement).reset();
+  });
+</script>

@@ -1,0 +1,161 @@
+---
+import { experiences } from '../data/portfolio.ts';
+---
+
+<section class="section exp" id="experience">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-kicker">// Career</span>
+      <h2 class="section-title">
+        <span class="hl-inline" style="background:var(--orange)">Experience</span>
+      </h2>
+    </div>
+
+    <div class="timeline reveal" data-stagger="true">
+      {experiences.map((e) => (
+        <article class="t-item" style={`--c:${e.color}`}>
+          <div class="t-marker">
+            <span class="t-dot"></span>
+          </div>
+          <div class="t-card">
+            <div class="t-head">
+              <div>
+                <h3 class="t-role">{e.role}</h3>
+                <p class="t-company">@ {e.company} · <span class="t-type">{e.type}</span></p>
+              </div>
+              <span class="t-period">{e.period}</span>
+            </div>
+            <p class="t-desc">{e.desc}</p>
+            <ul class="t-points">
+              {e.points.map((p) => (
+                <li><span class="t-bull">▸</span> {p}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 8px;
+  }
+
+  .t-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .t-marker {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .t-marker::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -28px;
+    left: 50%;
+    width: 4px;
+    background: var(--ink);
+    transform: translateX(-50%);
+  }
+  .t-item:last-child .t-marker::before {
+    display: none;
+  }
+  .t-dot {
+    position: relative;
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    background: var(--c);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    margin-top: 26px;
+    transform: rotate(45deg);
+  }
+
+  .t-card {
+    background: #fff;
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 26px 28px;
+    transition: transform 0.2s var(--ease);
+  }
+  .t-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0 var(--ink);
+  }
+
+  .t-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .t-role {
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .t-company {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .t-type {
+    background: var(--c);
+    padding: 2px 8px;
+    border: 2px solid var(--ink);
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .t-period {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 12px;
+    background: var(--ink);
+    color: var(--paper);
+    white-space: nowrap;
+  }
+  .t-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .t-points {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .t-points li {
+    display: flex;
+    gap: 8px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .t-bull {
+    color: var(--c);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 620px) {
+    .t-item { grid-template-columns: 36px 1fr; gap: 14px; }
+    .t-card { padding: 20px; }
+    .t-head { flex-direction: column; }
+  }
+</style>

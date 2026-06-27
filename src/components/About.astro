@@ -1,0 +1,165 @@
+---
+import { profile, services } from '../data/portfolio.ts';
+---
+
+<section class="section about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-intro reveal">
+        <span class="section-kicker">// About me</span>
+        <h2 class="section-title">
+          Yang suka<br />ngoprek &<br />
+          <span class="hl-inline" style="background:var(--pink)">build random</span>
+        </h2>
+      </div>
+
+      <div class="about-body reveal">
+        {profile.bio.map((p) => <p class="bio-line">{p}</p>)}
+
+        <ul class="facts">
+          <li><b>📍</b> <span>{profile.location}</span></li>
+          <li><b>✉️</b> <span>{profile.email}</span></li>
+          <li><b>🎯</b> <span>Full-stack, automation, SEO</span></li>
+          <li><b>⚡</b> <span>Vibe coding pake AI</span></li>
+        </ul>
+
+        <a href="#contact" class="btn btn-pink">Kerja bareng yuk</a>
+      </div>
+    </div>
+
+    <div class="services reveal" data-stagger="true">
+      <h3 class="svc-head"><span class="sticker">What I do</span></h3>
+      <div class="svc-grid">
+        {services.map((s, i) => (
+          <article class="svc-card" style={`--c:${['var(--yellow)','var(--green)','var(--pink)','var(--blue)','var(--orange)','var(--purple)'][i % 6]}`}>
+            <span class="svc-emoji">{s.emoji}</span>
+            <h4 class="svc-title">{s.title}</h4>
+            <p class="svc-desc">{s.desc}</p>
+            <span class="svc-num">{String(i + 1).padStart(2, '0')}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 48px;
+    align-items: start;
+    margin-bottom: 90px;
+  }
+
+  .hl-inline {
+    display: inline-block;
+    padding: 0 12px;
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    transform: rotate(-2deg);
+  }
+
+  .about-body {
+    background: #fff;
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 36px;
+    transform: rotate(0.6deg);
+  }
+  .bio-line {
+    font-size: 19px;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .bio-line:last-of-type {
+    margin-bottom: 26px;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .facts li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .facts b {
+    font-size: 18px;
+  }
+
+  .services {
+    margin-top: 0;
+  }
+  .svc-head {
+    margin-bottom: 30px;
+    display: block;
+    transform: rotate(-1deg);
+  }
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .svc-card {
+    position: relative;
+    background: var(--c);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 30px 26px 32px;
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    overflow: hidden;
+  }
+  .svc-card:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 13px 13px 0 var(--ink);
+  }
+  .svc-emoji {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 16px;
+    filter: drop-shadow(3px 3px 0 var(--ink));
+  }
+  .svc-title {
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .svc-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .svc-num {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--ink);
+    opacity: 0.25;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .svc-grid { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+    .about-body { padding: 26px; }
+  }
+</style>

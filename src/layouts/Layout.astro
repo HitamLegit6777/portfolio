@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { profile } from '../data/portfolio.ts';
 
 export interface Props {
   title?: string;
@@ -7,109 +8,32 @@ export interface Props {
 }
 
 const {
-  title = 'Nebula — Build with AI at the speed of thought',
-  description = 'Nebula is the AI-native workspace that turns ideas into shipped products. Autonomous agents, instant infra, and a beautiful canvas for ambitious teams.',
+  title = `${profile.name} (${profile.handle}) — Full-Stack Developer`,
+  description = profile.tagline,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#06060a" />
+    <meta name="theme-color" content="#FFD93D" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
   </head>
   <body>
-    <!-- Global background layers -->
-    <div class="bg-grid" aria-hidden="true"></div>
-    <div class="bg-aurora" aria-hidden="true">
-      <span class="blob blob-1"></span>
-      <span class="blob blob-2"></span>
-      <span class="blob blob-3"></span>
-    </div>
-
     <slot />
 
-    <style>
-      .bg-grid {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-        background-size: 64px 64px;
-        mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, #000 40%, transparent 100%);
-        -webkit-mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, #000 40%, transparent 100%);
-      }
-
-      .bg-aurora {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
-      .blob {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(90px);
-        opacity: 0.5;
-        will-change: transform;
-      }
-
-      .blob-1 {
-        width: 520px;
-        height: 520px;
-        top: -120px;
-        left: -80px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.55), transparent 70%);
-        animation: aurora 22s var(--ease-in-out) infinite;
-      }
-
-      .blob-2 {
-        width: 460px;
-        height: 460px;
-        top: 10%;
-        right: -100px;
-        background: radial-gradient(circle, rgba(217, 70, 239, 0.45), transparent 70%);
-        animation: aurora 26s var(--ease-in-out) infinite reverse;
-      }
-
-      .blob-3 {
-        width: 560px;
-        height: 560px;
-        bottom: -200px;
-        left: 35%;
-        background: radial-gradient(circle, rgba(34, 211, 238, 0.32), transparent 70%);
-        animation: aurora 30s var(--ease-in-out) infinite;
-      }
-
-      body > *:not(.bg-grid):not(.bg-aurora) {
-        position: relative;
-        z-index: 1;
-      }
-    </style>
-
     <script>
-      // Scroll reveal
       const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
@@ -119,17 +43,11 @@ const {
             }
           }
         },
-        { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+        { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
       );
-      const reveal = () =>
-        document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
-          io.observe(el);
-          if (el.children.length && el.dataset.stagger) {
-            [...el.children].forEach((c, i) => ((c as HTMLElement).style.transitionDelay = `${i * 80}ms`));
-          }
-        });
-      if (document.readyState !== 'loading') reveal();
-      else document.addEventListener('DOMContentLoaded', reveal);
+      const run = () => document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      if (document.readyState !== 'loading') run();
+      else document.addEventListener('DOMContentLoaded', run);
     </script>
   </body>
 </html>

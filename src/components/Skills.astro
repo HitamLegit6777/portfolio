@@ -1,0 +1,175 @@
+---
+import { skills, skillCats } from '../data/portfolio.ts';
+---
+
+<section class="section skills" id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-kicker">// Tech stack</span>
+      <h2 class="section-title">
+        <span class="hl-inline" style="background:var(--green)">Skills</span> &
+        tools
+      </h2>
+    </div>
+
+    <div class="filter-bar reveal">
+      <button class="chip active" data-cat="all" style="--c:#fff">All</button>
+      {skillCats.map((c) => (
+        <button class="chip" data-cat={c.key} style={`--c:${c.color}`}>{c.label}</button>
+      ))}
+    </div>
+
+    <div class="skills-grid reveal" id="skillsGrid">
+      {skills.map((s) => (
+        <div class="skill" data-cat={s.cat} style={`--c:${s.color}`}>
+          <div class="skill-top">
+            <span class="skill-name">{s.name}</span>
+            <span class="skill-lvl">{s.level}%</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill" style={`width:${s.level}%`}></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    background: var(--ink);
+    color: var(--paper);
+    border-top: var(--border);
+    border-bottom: var(--border);
+    position: relative;
+  }
+  .skills::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+    pointer-events: none;
+  }
+  .skills > .container { position: relative; }
+
+  .skills .section-kicker {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .hl-inline {
+    display: inline-block;
+    padding: 0 12px;
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    transform: rotate(-2deg);
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .chip {
+    padding: 9px 18px;
+    background: transparent;
+    border: 3px solid var(--paper);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+  }
+  .chip:hover {
+    background: var(--c);
+    color: var(--ink);
+    transform: rotate(-2deg);
+  }
+  .chip.active {
+    background: var(--c);
+    color: var(--ink);
+    box-shadow: 5px 5px 0 var(--paper);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px 28px;
+  }
+  .skill {
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .skill.hide {
+    display: none;
+  }
+  .skill-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+  }
+  .skill-name {
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .skill-lvl {
+    font-size: 14px;
+    color: var(--c);
+    font-weight: 700;
+  }
+  .bar {
+    height: 22px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 3px solid var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--c);
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.18) 0 8px,
+      transparent 8px 16px
+    );
+    transition: width 0.8s var(--ease);
+    position: relative;
+  }
+  .bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--paper);
+  }
+
+  @media (max-width: 860px) {
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const chips = document.querySelectorAll('.chip');
+  const skills = document.querySelectorAll('.skill');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      const cat = chip.getAttribute('data-cat');
+      skills.forEach((s) => {
+        const sc = s.getAttribute('data-cat');
+        s.classList.toggle('hide', cat !== 'all' && sc !== cat);
+      });
+    });
+  });
+</script>

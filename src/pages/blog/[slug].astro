@@ -1,0 +1,363 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { blogs, profile } from '../../data/portfolio.ts';
+import { marked } from 'marked';
+
+export function getStaticPaths() {
+  return blogs.map((b) => ({
+    params: { slug: b.slug },
+    props: { post: b },
+  }));
+}
+
+const { post } = Astro.props;
+const html = marked.parse(post.content) as string;
+const related = blogs.filter((b) => b.slug !== post.slug).slice(0, 3);
+---
+
+<Layout title={`${post.title} — ${profile.name}`} description={post.excerpt}>
+  <Navbar />
+  <article class="post" id="top">
+    <div class="container post-inner">
+      <a href="/#blog" class="back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to blog
+      </a>
+
+      <header class="post-head">
+        <span class="post-cat" style={`--c:${post.color}`}>{post.category}</span>
+        <h1 class="post-title">{post.title}</h1>
+        <div class="post-meta">
+          <span>✍️ {post.author}</span>
+          <span class="sep">·</span>
+          <span>📅 {post.date}</span>
+          <span class="sep">·</span>
+          <span>🕐 {post.read} read</span>
+        </div>
+      </header>
+
+      <div class="post-banner" style={`--c:${post.color}`}>
+        <span class="post-banner-emoji">
+          {['📝','🤖','🔗','🤖','🎲','🚀'][blogs.findIndex((b) => b.slug === post.slug) % 6]}
+        </span>
+      </div>
+
+      <div class="post-body" set:html={html}></div>
+
+      <div class="post-foot">
+        <button class="share-btn" id="shareBtn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+          Share article
+        </button>
+        <a href={`mailto:${profile.email}`} class="share-btn alt">💬 Reply via email</a>
+      </div>
+    </div>
+
+    <section class="related">
+      <div class="container">
+        <h2 class="related-title">Baca juga</h2>
+        <div class="related-grid">
+          {related.map((r) => (
+            <a href={`/blog/${r.slug}`} class="r-card" style={`--c:${r.color}`}>
+              <span class="r-cat">{r.category}</span>
+              <h3>{r.title}</h3>
+              <span class="r-read">{r.read} →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </article>
+  <Footer />
+</Layout>
+
+<style is:global>
+  .post {
+    padding: 40px 0 60px;
+    min-height: 60vh;
+  }
+  .post-inner {
+    max-width: 760px;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 3px solid var(--ink);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s var(--ease), background 0.2s;
+    margin-bottom: 32px;
+  }
+  .back:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--ink);
+    background: var(--yellow);
+  }
+
+  .post-head {
+    margin-bottom: 28px;
+  }
+  .post-cat {
+    display: inline-block;
+    padding: 5px 14px;
+    background: var(--c);
+    border: 3px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
+    margin-bottom: 18px;
+  }
+  .post-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    padding-bottom: 24px;
+    border-bottom: 3px solid var(--ink);
+  }
+  .post-meta .sep {
+    color: var(--ink);
+    opacity: 0.4;
+  }
+
+  .post-banner {
+    height: 180px;
+    background: var(--c);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    display: grid;
+    place-items: center;
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .post-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0 14px, transparent 14px 28px);
+  }
+  .post-banner-emoji {
+    font-size: 70px;
+    filter: drop-shadow(4px 4px 0 var(--ink));
+    z-index: 1;
+  }
+
+  .post-body {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+  .post-body h1 {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 8px 0 20px;
+  }
+  .post-body h2 {
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 34px 0 14px;
+    padding-left: 14px;
+    border-left: 6px solid var(--ink);
+  }
+  .post-body p {
+    margin: 0 0 16px;
+  }
+  .post-body ul,
+  .post-body ol {
+    margin: 0 0 18px;
+    padding-left: 6px;
+    list-style: none;
+  }
+  .post-body ul li,
+  .post-body ol li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 10px;
+  }
+  .post-body ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 8px;
+    color: var(--pink);
+    font-weight: 700;
+  }
+  .post-body ol {
+    counter-reset: step;
+  }
+  .post-body ol li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .post-body strong {
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--yellow);
+    padding: 0 4px;
+  }
+  .post-body a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .post-foot {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 3px solid var(--ink);
+  }
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 3px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s var(--ease), background 0.2s;
+  }
+  .share-btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--ink);
+    background: var(--green);
+    color: var(--ink);
+  }
+  .share-btn.alt {
+    background: #fff;
+    color: var(--ink);
+  }
+  .share-btn.alt:hover {
+    background: var(--pink);
+  }
+
+  .related {
+    padding: 50px 0 80px;
+    border-top: 3px solid var(--ink);
+    margin-top: 20px;
+  }
+  .related-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 26px;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .r-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background: #fff;
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  .r-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 9px 9px 0 var(--ink);
+  }
+  .r-cat {
+    align-self: flex-start;
+    padding: 3px 9px;
+    background: var(--c);
+    border: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .r-card h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    flex: 1;
+  }
+  .r-read {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 760px) {
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('shareBtn');
+  btn?.addEventListener('click', async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        const orig = btn.textContent;
+        btn.textContent = '✓ Link copied!';
+        setTimeout(() => {
+          btn.textContent = orig;
+        }, 1800);
+      }
+    } catch {
+      /* cancelled */
+    }
+  });
+</script>

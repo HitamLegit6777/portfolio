@@ -1,491 +1,359 @@
 ---
-const logos = ['Vercel', 'Linear', 'Notion', 'Framer', 'Raycast', 'Arc'];
+import { profile, stats } from '../data/portfolio.ts';
 ---
 
 <section class="hero" id="top">
   <div class="container hero-grid">
-    <div class="hero-copy">
-      <span class="eyebrow reveal"><span class="dot"></span> Nebula 3.0 is now in public beta</span>
+    <div class="hero-left">
+      <span class="status">
+        <span class="pulse"></span> {profile.status}
+      </span>
 
-      <h1 class="hero-title reveal">
-        Build with AI at the
-        <span class="grad-text">speed of thought</span>
+      <h1 class="hero-title">
+        Hi, gue <span class="hl hl-yellow">{profile.name}</span>
+        <br />
+        a.k.a <span class="hl hl-pink">{profile.handle}</span>
+        <span class="wave">👋</span>
       </h1>
 
-      <p class="hero-sub reveal">
-        Nebula is the AI-native workspace that turns a sentence into shipped software.
-        Autonomous agents design, code, and deploy — while you steer the vision.
-      </p>
-
-      <div class="hero-cta reveal">
-        <a href="#cta" class="btn btn-primary">
-          Start building free
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </a>
-        <a href="#workflow" class="btn btn-ghost">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          Watch demo
-        </a>
+      <div class="role-line">
+        <span class="r-arrow">▶</span>
+        <span class="role" id="role">{profile.roles[0]}</span><span class="cursor">_</span>
       </div>
 
-      <div class="hero-meta reveal">
-        <div class="avatars">
-          <span class="avatar a0" style="--i:0"></span>
-          <span class="avatar a1" style="--i:1"></span>
-          <span class="avatar a2" style="--i:2"></span>
-          <span class="avatar a3" style="--i:3"></span>
-        </div>
-        <p><strong>28,000+</strong> builders shipping this week</p>
+      <p class="hero-sub">{profile.tagline}</p>
+
+      <div class="hero-cta">
+        <a href="#work" class="btn">
+          Lihat project
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#contact" class="btn btn-outline">Hubungi saya</a>
+      </div>
+
+      <div class="hero-socials">
+        {profile.socials.map((s) => (
+          <a href={s.href} class="social" target="_blank" rel="noopener">
+            <span class="s-letter">{s.letter}</span>
+          </a>
+        ))}
       </div>
     </div>
 
-    <!-- App preview mockup -->
-    <div class="hero-visual reveal">
-      <div class="glow"></div>
-      <div class="app-card">
-        <div class="app-bar">
-          <span class="tb red"></span><span class="tb amber"></span><span class="tb green"></span>
-          <div class="app-url">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            nebula.app/workspace
-          </div>
+    <div class="hero-right">
+      <div class="avatar-card">
+        <div class="avatar-stripe">PORTRAIT.JPG</div>
+        <div class="avatar-box">
+          <div class="avatar-emoji">🧑‍💻</div>
+          <div class="avatar-glitch">{profile.handle}</div>
         </div>
-        <div class="app-body">
-          <aside class="app-side">
-            <div class="side-item active"><span class="ico dash"></span>Overview</div>
-            <div class="side-item"><span class="ico lay"></span>Agents</div>
-            <div class="side-item"><span class="ico code"></span>Code</div>
-            <div class="side-item"><span class="ico chart"></span>Insights</div>
-            <div class="side-spacer"></div>
-            <div class="side-proj">
-              <span class="proj-dot"></span> Phoenix · launch
-            </div>
-          </aside>
-
-          <main class="app-main">
-            <div class="app-head">
-              <div>
-                <p class="app-eyebrow">Production · live</p>
-                <h3 class="app-title">Phoenix launch page</h3>
-              </div>
-              <span class="pill"><span class="live-dot"></span>Deploying</span>
-            </div>
-
-            <div class="prompt">
-              <span class="prompt-avatar"></span>
-              <div class="prompt-body">
-                <p class="prompt-text">Build a waitlist page with a hero, animated logo cloud, and Stripe-backed early-bird checkout.</p>
-                <span class="prompt-time">2s ago · 4 agents</span>
-              </div>
-            </div>
-
-            <div class="agent-track">
-              <div class="agent done"><span class="agent-dot"></span>Design system<span class="agent-check">✓</span></div>
-              <div class="agent done"><span class="agent-dot"></span>Components<span class="agent-check">✓</span></div>
-              <div class="agent active"><span class="agent-dot"></span>Stripe integration<span class="agent-spin"></span></div>
-              <div class="agent"><span class="agent-dot"></span>Deploy preview</div>
-            </div>
-
-            <div class="code">
-              <div class="code-line"><span class="ln c-kw">const</span> <span class="ln c-var">checkout</span> = <span class="ln c-kw">await</span> <span class="ln c-fn">stripe</span>.<span class="ln c-fn">sessions</span>.<span class="ln c-fn">create</span>(&#123;</div>
-              <div class="code-line indent"><span class="ln c-prop">mode</span>: <span class="ln c-str">'payment'</span>,</div>
-              <div class="code-line indent"><span class="ln c-prop">line_items</span>: [<span class="ln c-str">price_earlybird</span>],</div>
-              <div class="code-line indent"><span class="ln c-prop">success_url</span>: <span class="ln c-str">'/welcome'</span>,</div>
-              <div class="code-line">&#125;);</div>
-            </div>
-          </main>
+        <div class="avatar-foot">
+          <span>📍 {profile.location}</span>
+          <span class="dot">●</span>
+          <span>v3.0</span>
         </div>
-      </div>
-      <div class="float-card fc-1">
-        <span class="fc-ico">⚡</span>
-        <div><strong>Deployed</strong><span>1.2s · global edge</span></div>
-      </div>
-      <div class="float-card fc-2">
-        <span class="fc-ico grad-text">98%</span>
-        <div><strong>Lighthouse</strong><span>perf · a11y · seo</span></div>
+        <span class="badge-star b1">★</span>
+        <span class="badge-star b2">✦</span>
+        <span class="badge-sticker bs1">VIBE<br />CODER</span>
+        <span class="badge-sticker bs2">SINCE<br />2022</span>
       </div>
     </div>
   </div>
 
-  <!-- Logo cloud -->
-  <div class="container logos-wrap reveal">
-    <p class="logos-label">Trusted by fast-moving teams at</p>
-    <div class="logos-track">
-      <div class="logos-row">
-        {[...logos, ...logos].map((l) => <span class="logo">{l}</span>)}
+  <div class="container stats-strip reveal">
+    {stats.map((s) => (
+      <div class="stat">
+        <span class="stat-value">{s.value}</span>
+        <span class="stat-label">{s.label}</span>
       </div>
-    </div>
+    ))}
   </div>
 </section>
 
 <style>
   .hero {
-    padding: 160px 0 80px;
+    padding: 70px 0 40px;
     position: relative;
   }
 
   .hero-grid {
     display: grid;
-    grid-template-columns: 1fr 1.05fr;
-    gap: 56px;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
     align-items: center;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px;
+    background: var(--green);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    transform: rotate(-1.5deg);
+  }
+  .pulse {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ink);
+    animation: blink 1.2s infinite;
   }
 
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(40px, 6vw, 72px);
-    line-height: 1.02;
-    letter-spacing: -0.035em;
-    font-weight: 600;
-    margin: 24px 0 22px;
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin: 26px 0 22px;
+    text-transform: uppercase;
+  }
+  .hl {
+    display: inline-block;
+    padding: 0 10px;
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    transform: rotate(-1.5deg);
+  }
+  .hl-yellow { background: var(--yellow); }
+  .hl-pink { background: var(--pink); }
+  .wave {
+    display: inline-block;
+    animation: wobble 2s ease-in-out infinite;
+    transform-origin: 70% 70%;
+  }
+
+  .role-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-family: var(--font-mono);
+    font-size: clamp(18px, 2.4vw, 26px);
+    font-weight: 700;
+  }
+  .r-arrow { color: var(--pink); }
+  .role { color: var(--ink); }
+  .cursor {
+    color: var(--blue);
+    animation: blink 1s steps(1) infinite;
   }
 
   .hero-sub {
-    font-size: 19px;
-    line-height: 1.6;
-    color: var(--text-muted);
-    max-width: 520px;
-    margin-bottom: 36px;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin-bottom: 32px;
   }
 
   .hero-cta {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
-    margin-bottom: 40px;
+    margin-bottom: 34px;
   }
 
-  .hero-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    color: var(--text-dim);
-    font-size: 14px;
-  }
-  .hero-meta strong {
-    color: var(--text);
-  }
-  .avatars {
-    display: flex;
-  }
-  .avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 2px solid var(--bg-0);
-    margin-left: -10px;
-    background: linear-gradient(135deg, hsl(calc(260 + var(--i) * 30), 70%, 62%), hsl(calc(290 + var(--i) * 25), 75%, 55%));
-  }
-  .avatar:first-child {
-    margin-left: 0;
-  }
-
-  /* App preview */
-  .hero-visual {
-    position: relative;
-    perspective: 1600px;
-  }
-  .glow {
-    position: absolute;
-    inset: -40px;
-    background: radial-gradient(circle at 50% 40%, rgba(168, 85, 247, 0.35), transparent 60%);
-    filter: blur(50px);
-    z-index: -1;
-  }
-  .app-card {
-    background: linear-gradient(180deg, rgba(20, 20, 34, 0.95), rgba(13, 13, 22, 0.98));
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    overflow: hidden;
-    transform: rotateX(4deg) rotateY(-9deg);
-    transform-style: preserve-3d;
-    transition: transform 0.4s var(--ease-out);
-    animation: float 8s var(--ease-in-out) infinite;
-  }
-  .app-card:hover {
-    transform: rotateX(0deg) rotateY(0deg);
-  }
-
-  .app-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.02);
-  }
-  .tb {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-  }
-  .tb.red { background: #ff5f57; }
-  .tb.amber { background: #febc2e; }
-  .tb.green { background: #28c840; }
-  .app-url {
-    margin-left: 12px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 5px 14px;
-    border-radius: 100px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--text-dim);
-  }
-
-  .app-body {
-    display: grid;
-    grid-template-columns: 168px 1fr;
-    min-height: 380px;
-  }
-  .app-side {
-    border-right: 1px solid var(--border);
-    padding: 16px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .side-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 10px;
-    border-radius: 10px;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-  .side-item.active {
-    background: var(--surface-2);
-    color: var(--text);
-  }
-  .ico {
-    width: 16px;
-    height: 16px;
-    border-radius: 5px;
-    background: var(--surface-2);
-    flex-shrink: 0;
-  }
-  .side-item.active .ico { background: var(--grad-violet); }
-  .side-spacer { flex: 1; }
-  .side-proj {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 10px;
-    font-size: 12px;
-    color: var(--text-dim);
-    border-top: 1px solid var(--border);
-    margin-top: 4px;
-  }
-  .proj-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--amber);
-  }
-
-  .app-main {
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .app-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  .app-eyebrow {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-dim);
-    margin-bottom: 2px;
-  }
-  .app-title {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 600;
-  }
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 11px;
-    border-radius: 100px;
-    background: rgba(52, 211, 153, 0.12);
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    font-size: 11.5px;
-    color: var(--emerald);
-    font-weight: 500;
-  }
-  .live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--emerald);
-    animation: pulse-dot 1.6s infinite;
-  }
-
-  .prompt {
+  .hero-socials {
     display: flex;
     gap: 12px;
-    padding: 12px;
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-    border: 1px solid var(--border);
   }
-  .prompt-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--grad-violet);
-    flex-shrink: 0;
+  .social {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s var(--ease), background 0.2s;
   }
-  .prompt-text {
-    font-size: 13.5px;
-    line-height: 1.5;
-    margin-bottom: 4px;
+  .social:hover {
+    transform: translate(-3px, -3px) rotate(-6deg);
+    background: var(--yellow);
+    box-shadow: 8px 8px 0 var(--ink);
   }
-  .prompt-time {
-    font-size: 11px;
-    color: var(--text-dim);
+  .s-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
   }
 
-  .agent-track {
+  /* Avatar card */
+  .hero-right {
+    perspective: 1200px;
+  }
+  .avatar-card {
+    position: relative;
+    background: #fff;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-lg);
+    transform: rotate(2.5deg);
+    transition: transform 0.4s var(--ease);
+  }
+  .avatar-card:hover {
+    transform: rotate(-1deg);
+  }
+
+  .avatar-stripe {
+    background: var(--ink);
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-bottom: var(--border);
+  }
+
+  .avatar-box {
+    position: relative;
+    height: 340px;
+    background:
+      repeating-linear-gradient(45deg, var(--purple) 0 18px, #fff 18px 20px),
+      var(--purple);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .avatar-emoji {
+    font-size: 130px;
+    filter: drop-shadow(6px 6px 0 var(--ink));
+    z-index: 1;
+  }
+  .avatar-glitch {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    background: var(--ink);
+    color: var(--green);
+    padding: 4px 12px;
+    border: 3px solid var(--ink);
+  }
+
+  .avatar-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-top: var(--border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .avatar-foot .dot {
+    color: var(--green);
+  }
+
+  .badge-star {
+    position: absolute;
+    font-size: 26px;
+    animation: spin 8s linear infinite;
+  }
+  .b1 { top: -22px; right: 30px; color: var(--yellow); -webkit-text-stroke: 2px var(--ink); }
+  .b2 { bottom: 80px; left: -26px; color: var(--pink); -webkit-text-stroke: 2px var(--ink); animation-direction: reverse; }
+
+  .badge-sticker {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .bs1 {
+    top: 70px;
+    right: -34px;
+    background: var(--orange);
+    transform: rotate(12deg);
+  }
+  .bs2 {
+    bottom: 40px;
+    right: -30px;
+    background: var(--green);
+    transform: rotate(-10deg);
+  }
+
+  /* Stats strip */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 70px;
+    border: var(--border);
+    box-shadow: var(--shadow);
+  }
+  .stat {
+    padding: 28px 22px;
+    background: #fff;
+    border-right: var(--border);
     display: flex;
     flex-direction: column;
     gap: 6px;
   }
-  .agent {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-  .agent.done { color: var(--text-muted); }
-  .agent.active {
-    background: rgba(139, 92, 246, 0.1);
-    border: 1px solid rgba(139, 92, 246, 0.25);
-    color: var(--text);
-  }
-  .agent-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--text-dim);
-    flex-shrink: 0;
-  }
-  .agent.done .agent-dot { background: var(--emerald); }
-  .agent.active .agent-dot { background: var(--violet); box-shadow: 0 0 8px var(--violet); }
-  .agent-check {
-    margin-left: auto;
-    color: var(--emerald);
-    font-size: 12px;
-  }
-  .agent-spin {
-    margin-left: auto;
-    width: 12px;
-    height: 12px;
-    border: 2px solid rgba(139, 92, 246, 0.3);
-    border-top-color: var(--violet);
-    border-radius: 50%;
-    animation: spin-slow 0.8s linear infinite;
-  }
-
-  .code {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 1.9;
-    padding: 14px 16px;
-    border-radius: var(--radius-sm);
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-  }
-  .code-line { white-space: nowrap; overflow: hidden; }
-  .code-line.indent { padding-left: 22px; }
-  .c-kw { color: #c084fc; }
-  .c-var { color: #fbbf24; }
-  .c-fn { color: #60a5fa; }
-  .c-prop { color: #22d3ee; }
-  .c-str { color: #86efac; }
-
-  .float-card {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 15px;
-    border-radius: 14px;
-    background: rgba(18, 18, 30, 0.9);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--border-strong);
-    box-shadow: var(--shadow-card);
-    font-size: 13px;
-    animation: float 6s var(--ease-in-out) infinite;
-  }
-  .float-card strong { display: block; font-size: 13.5px; }
-  .float-card span:not(.fc-ico) { color: var(--text-dim); font-size: 11.5px; }
-  .fc-ico { font-size: 18px; }
-  .fc-1 { top: 12%; left: -28px; animation-delay: -1s; }
-  .fc-2 { bottom: 16%; right: -24px; animation-delay: -3s; }
-  .fc-2 .fc-ico { font-size: 22px; font-weight: 700; }
-
-  /* Logo cloud */
-  .logos-wrap {
-    margin-top: 96px;
-    text-align: center;
-  }
-  .logos-label {
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-bottom: 28px;
-    letter-spacing: 0.02em;
-  }
-  .logos-track {
-    overflow: hidden;
-    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  }
-  .logos-row {
-    display: flex;
-    gap: 60px;
-    width: max-content;
-    animation: marquee 28s linear infinite;
-  }
-  .logo {
+  .stat:last-child { border-right: none; }
+  .stat:nth-child(1) { background: var(--yellow); }
+  .stat:nth-child(2) { background: #fff; }
+  .stat:nth-child(3) { background: var(--pink); }
+  .stat:nth-child(4) { background: var(--blue); color: #fff; }
+  .stat-value {
     font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text-dim);
-    opacity: 0.7;
-    transition: opacity 0.3s, color 0.3s;
-    white-space: nowrap;
+    font-size: clamp(34px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
   }
-  .logo:hover {
-    opacity: 1;
-    color: var(--text);
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   @media (max-width: 980px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      gap: 64px;
-    }
-    .hero { padding-top: 130px; }
-    .fc-1, .fc-2 { display: none; }
+    .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+    .bs1, .bs2 { display: none; }
+    .avatar-box { height: 280px; }
   }
-  @media (max-width: 560px) {
-    .app-body { grid-template-columns: 1fr; }
-    .app-side { display: none; }
+  @media (max-width: 620px) {
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: var(--border); }
   }
 </style>
+
+<script>
+  const data = document.getElementById('role');
+  if (data) {
+    const list = [
+      'Full-Stack Developer',
+      'UI/UX Enthusiast',
+      'Open Source Contributor',
+      'Problem Solver',
+      'Tech Blogger',
+      'Vibe Coder',
+    ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % list.length;
+      data.textContent = list[i];
+    }, 2200);
+  }
+</script>
