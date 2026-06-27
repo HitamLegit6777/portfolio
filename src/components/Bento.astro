@@ -1,0 +1,319 @@
+---
+const features = [
+  {
+    id: 'agents',
+    cls: 'big',
+    tag: 'Autonomous agents',
+    title: 'A team of agents that ship while you sleep',
+    desc: 'Planner, designer, engineer, and QA agents collaborate in real time. Give them a goal — they break it down, build, test, and open a pull request.',
+    accent: 'violet',
+    icon: 'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a3 3 0 1 1-3 3 3 3 0 0 1 3-3z',
+  },
+  {
+    id: 'speed',
+    cls: 'med',
+    tag: 'Edge runtime',
+    title: 'Deploys in 1.2 seconds',
+    desc: 'Ship to 300+ edge locations worldwide. No cold starts, ever.',
+    accent: 'cyan',
+  },
+  {
+    id: 'secure',
+    cls: 'med',
+    tag: 'Enterprise-grade',
+    title: 'SOC 2 & GDPR ready',
+    desc: 'End-to-end encryption, granular RBAC, audit logs, and SSO.',
+    accent: 'emerald',
+  },
+  {
+    id: 'canvas',
+    cls: 'wide',
+    tag: 'Infinite canvas',
+    title: 'Think on an infinite, AI-aware canvas',
+    desc: 'Sketch, wireframe, or paste a Figma link. The canvas understands your domain and turns rough ideas into structured, executable plans your agents can act on.',
+    accent: 'fuchsia',
+  },
+  {
+    id: 'collab',
+    cls: 'med',
+    tag: 'Realtime',
+    title: 'Co-build with your team',
+    desc: 'Multiplayer everything — cursors, comments, branches.',
+    accent: 'amber',
+  },
+  {
+    id: 'insights',
+    cls: 'med',
+    tag: 'Observability',
+    title: 'Know what every token does',
+    desc: 'Trace each decision from prompt to production with full replay.',
+    accent: 'cyan',
+  },
+];
+---
+
+<section class="section bento" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span> Capabilities</span>
+      <h2 class="section-title">Everything you need to go from <span class="grad-text">idea to orbit</span></h2>
+      <p class="section-sub">One workspace replaces your design tools, IDE, CI/CD, and observability stack — woven together by agents that actually do the work.</p>
+    </div>
+
+    <div class="bento-grid reveal" data-stagger="true">
+      {
+        features.map((f) => (
+          <article class={`card ${f.cls} accent-${f.accent}`}>
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="card-top">
+              <span class="card-tag">{f.tag}</span>
+              {f.id === 'agents' && <div class="orbit" aria-hidden="true"><span class="orbit-core"></span><span class="orbit-sat s1"></span><span class="orbit-sat s2"></span><span class="orbit-ring"></span></div>}
+              {f.id === 'speed' && <div class="spark" aria-hidden="true"><span></span><span></span><span></span></div>}
+              {f.id === 'secure' && <div class="shield" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>}
+              {f.id === 'canvas' && <div class="canvas-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>}
+              {f.id === 'collab' && <div class="cursors" aria-hidden="true"><span class="cu c1"></span><span class="cu c2"></span></div>}
+              {f.id === 'insights' && <div class="bars" aria-hidden="true"><span style="h:30%"></span><span style="h:55%"></span><span style="h:70%"></span><span style="h:45%"></span><span style="h:90%"></span></div>}
+            </div>
+            <h3 class="card-title">{f.title}</h3>
+            <p class="card-desc">{f.desc}</p>
+            <a href="#" class="card-link">
+              Learn more
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 250px;
+    gap: 18px;
+  }
+
+  .card {
+    position: relative;
+    grid-column: span 2;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.015));
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s var(--ease-out), border-color 0.4s, background 0.4s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    background: linear-gradient(180deg, var(--surface-2), rgba(255, 255, 255, 0.03));
+  }
+  .card:hover .card-glow {
+    opacity: 1;
+  }
+
+  .card.big { grid-column: span 2; grid-row: span 2; padding: 36px; }
+  .card.med { grid-column: span 2; }
+  .card.wide { grid-column: span 4; }
+
+  .card-glow {
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    height: 80%;
+    background: radial-gradient(circle, var(--ac, rgba(139, 92, 246, 0.25)), transparent 70%);
+    filter: blur(40px);
+    opacity: 0.5;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+  .accent-violet { --ac: rgba(139, 92, 246, 0.3); }
+  .accent-fuchsia { --ac: rgba(217, 70, 239, 0.3); }
+  .accent-cyan { --ac: rgba(34, 211, 238, 0.3); }
+  .accent-emerald { --ac: rgba(52, 211, 153, 0.28); }
+  .accent-amber { --ac: rgba(251, 191, 36, 0.25); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    min-height: 28px;
+  }
+  .card-tag {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 5px 11px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .card.big .card-title { font-size: 30px; }
+  .card-desc {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+  .card.big .card-desc { font-size: 16px; }
+
+  .card-link {
+    margin-top: auto;
+    padding-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    opacity: 0.85;
+    transition: gap 0.3s, opacity 0.3s;
+  }
+  .card-link:hover { gap: 10px; opacity: 1; }
+
+  /* Decorative visuals */
+  .orbit {
+    position: relative;
+    width: 64px;
+    height: 64px;
+  }
+  .orbit-core {
+    position: absolute;
+    inset: 40%;
+    border-radius: 50%;
+    background: var(--grad-violet);
+    box-shadow: 0 0 18px var(--violet);
+  }
+  .orbit-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+  }
+  .orbit-ring::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+  }
+  .orbit-sat {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin: -5px;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+  }
+  .s1 { animation: spin-slow 6s linear infinite; transform-origin: 5px 5px; }
+  .s2 { background: var(--fuchsia); box-shadow: 0 0 10px var(--fuchsia); animation: spin-slow 9s linear infinite reverse; transform-origin: 5px 5px; }
+
+  .spark {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 40px;
+  }
+  .spark span {
+    width: 4px;
+    background: var(--grad-violet);
+    border-radius: 4px;
+    animation: float 1.2s var(--ease-in-out) infinite;
+  }
+  .spark span:nth-child(1) { height: 40%; animation-delay: 0s; }
+  .spark span:nth-child(2) { height: 75%; animation-delay: 0.2s; }
+  .spark span:nth-child(3) { height: 55%; animation-delay: 0.4s; }
+
+  .shield {
+    color: var(--emerald);
+    width: 40px;
+    height: 40px;
+  }
+  .shield svg { width: 100%; height: 100%; }
+
+  .canvas-dots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 56px;
+  }
+  .canvas-dots span {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+  .canvas-dots span:nth-child(3),
+  .canvas-dots span:nth-child(5) {
+    background: var(--grad-violet);
+    border-color: transparent;
+  }
+
+  .cursors { position: relative; width: 56px; height: 40px; }
+  .cu {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 12px solid var(--amber);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  }
+  .cu::after {
+    content: attr(data-l);
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 9px;
+    color: #000;
+    background: var(--amber);
+    white-space: nowrap;
+  }
+  .c1 { top: 2px; left: 4px; }
+  .c2 { top: 12px; left: 20px; border-left-color: var(--cyan); }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 40px;
+  }
+  .bars span {
+    width: 6px;
+    border-radius: 3px;
+    background: linear-gradient(var(--cyan), rgba(34, 211, 238, 0.2));
+  }
+
+  @media (max-width: 860px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+    }
+    .card, .card.big, .card.med, .card.wide {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+</style>
